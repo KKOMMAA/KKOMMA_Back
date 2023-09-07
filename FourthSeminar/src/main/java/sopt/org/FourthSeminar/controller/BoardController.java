@@ -15,6 +15,7 @@ import sopt.org.FourthSeminar.controller.dto.request.BoardRequestPartMultiImage;
 import sopt.org.FourthSeminar.exception.Success;
 import sopt.org.FourthSeminar.external.client.aws.S3Service;
 import sopt.org.FourthSeminar.service.BoardService;
+import sopt.org.FourthSeminar.service.VoiceService;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -25,6 +26,7 @@ import java.util.List;
 public class BoardController {
 
     private final S3Service s3Service;
+    private final VoiceService voiceService;
     private final BoardService boardService;
     //private final JwtService jwtService;
 
@@ -55,6 +57,17 @@ public class BoardController {
         return ApiResponse.success(Success.CREATE_BOARD_SUCCESS);
     }
 
+
+    @PostMapping(value = "/voice",consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    @ResponseStatus(HttpStatus.CREATED)
+    public ApiResponse voice(
+            @RequestPart BoardRequestPartImageDto request,
+            @RequestPart MultipartFile voice
+
+    ) {
+        System.out.println("하나 해커톤 컨트롤러 들어옴?");
+        return ApiResponse.success(Success.CREATE_VOCIE_TO_TEXT_SUCCESS,voiceService.useCloverSTT(voice));
+    }
 
 
 
