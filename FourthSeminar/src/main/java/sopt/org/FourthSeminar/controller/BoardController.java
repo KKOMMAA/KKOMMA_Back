@@ -7,10 +7,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import sopt.org.FourthSeminar.common.dto.ApiResponse;
 import sopt.org.FourthSeminar.controller.dto.request.BoardRequestPartImageDto;
+import sopt.org.FourthSeminar.controller.dto.response.VoiceTextSentimentResponseDto;
 import sopt.org.FourthSeminar.exception.Success;
 import sopt.org.FourthSeminar.external.client.aws.s3.S3Service;
 import sopt.org.FourthSeminar.service.BoardService;
-import sopt.org.FourthSeminar.service.VoiceService;
+import sopt.org.FourthSeminar.service.NaverService;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ import java.util.List;
 public class BoardController {
 
     private final S3Service s3Service;
-    private final VoiceService voiceService;
+    private final NaverService naverService;
     private final BoardService boardService;
     //private final JwtService jwtService;
 
@@ -54,13 +55,16 @@ public class BoardController {
 
     @PostMapping(value = "/voice",consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     @ResponseStatus(HttpStatus.CREATED)
-    public ApiResponse voice(
+    public ApiResponse<VoiceTextSentimentResponseDto> voice(
             @RequestPart BoardRequestPartImageDto request,
             @RequestPart MultipartFile voice
 
     ) {
         System.out.println("하나 해커톤 컨트롤러 들어옴?");
-        return ApiResponse.success(Success.CREATE_VOCIE_TO_TEXT_SUCCESS,voiceService.useCloverSTT(voice));
+        String voiceText = naverService.useCloverSTT(voice);
+        String sentiment = naverService.useCloverSentiment(voiceText);
+
+        return ApiResponse.success(Success.CREATE_VOCIE_TO_TEXT_SUCCESS,VoiceTextSentimentResponseDto.of(voiceText,sentiment));
     }
 
 

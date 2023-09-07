@@ -13,7 +13,7 @@ import org.json.simple.parser.JSONParser;
 
 @Service
 @RequiredArgsConstructor
-public class VoiceService {
+public class NaverService {
 
     @Value("${clover.stt.client-id}")
     private String CLIENT_ID;
@@ -96,5 +96,73 @@ public class VoiceService {
 
         return "실패했습니다. ㅈㅅㅈㅅㅈㅅ";
     }
+
+
+
+    // Naver CLOVA Sentiment
+    public String useCloverSentiment(String diaryContent) {
+        StringBuffer response = new StringBuffer();
+
+        try {
+            JSONObject object = new JSONObject();
+            object.put("content", diaryContent);
+
+            String apiURL = "https://naveropenapi.apigw.ntruss.com/sentiment-analysis/v1/analyze";
+            URL url = new URL(apiURL);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("POST");
+            con.setRequestProperty("X-NCP-APIGW-API-KEY-ID", CLIENT_ID);
+            con.setRequestProperty("X-NCP-APIGW-API-KEY", CLIENT_SECRET);
+            con.setRequestProperty("Content-Type", "application/json");
+
+
+            // post request
+            con.setUseCaches(false);
+            con.setDoOutput(true);
+            con.setDoInput(true);
+
+            try (OutputStream os = con.getOutputStream()){
+                byte request_data[] = object.toString().getBytes("utf-8");
+                os.write(request_data);
+            }
+
+            int responseCode = con.getResponseCode();
+            BufferedReader br;
+            if (responseCode == 200) { // 정상 호출
+                br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            } else { // 오류 발생
+                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+            }
+
+            String inputLine;
+            while ((inputLine = br.readLine()) != null) {
+                response.append(inputLine);
+            }
+            br.close();
+
+            System.out.println(response);
+
+            //json string parser
+            JSONParser parser = new JSONParser();
+            Object obj = parser.parse(response.toString());
+            JSONObject jsonObj = (JSONObject) obj;
+            JSONObject Obj = (JSONObject) jsonObj.get("document");
+
+
+            System.out.println(Obj.get("sentiment"));
+
+            return Obj.get("sentiment").toString();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return "실패했습니다. ㅈㅅㅈㅅㅈㅅ";
+
+
+    }
+
+
+
 }
 

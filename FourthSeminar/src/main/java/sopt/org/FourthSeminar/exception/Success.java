@@ -24,7 +24,7 @@ public enum Success {
     SIGNUP_SUCCESS(HttpStatus.CREATED, "회원가입이 완료됐습니다."),
     CREATE_BOARD_SUCCESS(HttpStatus.CREATED, "게시물 생성이 완료됐습니다."),
     CREATE_EMOTION_SUCCESS(HttpStatus.CREATED, "감정 기록에 성공했습니다."),
-    CREATE_VOCIE_TO_TEXT_SUCCESS(HttpStatus.CREATED,"네이버 클로바를 이용한 stt 성공")
+    CREATE_VOCIE_TO_TEXT_SUCCESS(HttpStatus.CREATED,"네이버 클로바를 이용한 stt와 감성분석 성공")
     ;
 
     private final HttpStatus httpStatus;
