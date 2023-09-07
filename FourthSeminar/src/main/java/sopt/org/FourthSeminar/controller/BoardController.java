@@ -6,18 +6,12 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import sopt.org.FourthSeminar.common.dto.ApiResponse;
-import sopt.org.FourthSeminar.config.jwt.JwtService;
-import sopt.org.FourthSeminar.config.resolver.UserId;
-import sopt.org.FourthSeminar.controller.dto.request.BoardImageListRequestDto;
-import sopt.org.FourthSeminar.controller.dto.request.BoardRequestDto;
 import sopt.org.FourthSeminar.controller.dto.request.BoardRequestPartImageDto;
-import sopt.org.FourthSeminar.controller.dto.request.BoardRequestPartMultiImage;
 import sopt.org.FourthSeminar.exception.Success;
-import sopt.org.FourthSeminar.external.client.aws.S3Service;
+import sopt.org.FourthSeminar.external.client.aws.s3.S3Service;
 import sopt.org.FourthSeminar.service.BoardService;
 import sopt.org.FourthSeminar.service.VoiceService;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
