@@ -33,13 +33,16 @@ public class BoardController {
     @ResponseStatus(HttpStatus.CREATED)
     public ApiResponse create(
             //@RequestHeader("Authorization") String accessToken,
-            @UserId Long userId,
+            // @UserId Long userId,
             //@ModelAttribute @Valid final BoardRequestDto request
             @RequestPart BoardRequestPartImageDto request,
             //@RequestPart List<MultipartFile> thumbnail,
             @RequestPart List<MultipartFile> thumbnails
 
     ) {
+
+        // user 한명으로 박기
+        Long userId = 1L;
 
         System.out.println("컨트롤러에 들어왔니?");
         //boardService.create(Long.parseLong(jwtService.getJwtContents(accessToken)),request);

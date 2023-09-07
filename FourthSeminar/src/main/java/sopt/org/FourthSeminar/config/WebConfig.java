@@ -13,9 +13,9 @@ import java.util.List;
 public class WebConfig implements WebMvcConfigurer{
     private final UserIdResolver userIdResolver;
 
-    @Override
-    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-        resolvers.add(userIdResolver);
-    }
+//    @Override
+//    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
+//        resolvers.add(userIdResolver);
+//    }
 
 }
