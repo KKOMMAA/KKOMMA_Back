@@ -48,6 +48,14 @@ dependencies {
 
 	// json parser
 	implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+
+
+	// aws sagemaker sdk
+//	compile "com.amazonaws:aws-java-sdk-sagemakerruntime:1.11.979"
+//	compile "com.amazonaws:aws-java-sdk-core:1.11.979"
+
+	implementation "com.amazonaws:aws-java-sdk-sagemakerruntime:1.11.979"
+	implementation "com.amazonaws:aws-java-sdk-core:1.11.979"
 }
 
 tasks.named('test') {
